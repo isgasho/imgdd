@@ -1,2 +1,14 @@
-[workspace]
-members = ["imgdd", "imgdd_bin"]
+[package]
+name = "imgdd"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "btm"
+path = "src/bin/main.rs"
+doc = false
+
+[dependencies]
+img_hash = "3.2.0"
+imghdr = "0.7.0"
+thiserror = "1.0.30"

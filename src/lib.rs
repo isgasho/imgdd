@@ -3,8 +3,8 @@
 
 #![forbid(unsafe_code)]
 #![forbid(missing_docs)]
-#![warn(rust_2018_idioms)]
-#![warn(rust_2021_compatibility)]
+#![forbid(rust_2018_idioms)]
+#![forbid(rust_2021_compatibility)]
 
 mod deduplicator;
 mod delete_policy;

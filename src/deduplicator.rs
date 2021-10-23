@@ -1,8 +1,4 @@
-use std::{
-    collections::HashMap,
-    ffi::OsString,
-    path::{Path, PathBuf},
-};
+use std::{collections::HashMap, ffi::OsString, path::PathBuf};
 
 use crate::DeletePolicy;
 
@@ -10,13 +6,20 @@ use crate::DeletePolicy;
 pub struct Deduplicator {}
 
 impl Deduplicator {
-    /// Scans for all images in the given directories and returns a mapping of similar image paths.
+    /// Scans for all images in the given directories and returns a mapping of image paths detected to be
+    /// similar. Users may want to inspect the results after to determine whether there are false positives,
+    /// or make their own decisions about what to do with images that may have been decided as duplicate.
+    ///
+    /// Results can be passed to the [`delete`](Deduplicator::delete) function to automatically delete detected
+    /// duplicates.
     ///
     /// Under the hood, it uses the [`img_hash`](https://crates.io/crates/img_hash) crate.
-    pub fn scan<D>(&self, directories: D) -> HashMap<PathBuf, Vec<PathBuf>>
+    pub fn scan<P>(&self, paths: P) -> HashMap<PathBuf, Vec<PathBuf>>
     where
-        D: IntoIterator<Item = Path>,
+        P: IntoIterator<Item = PathBuf>,
     {
+        paths.into_iter().for_each(|path| {});
+
         HashMap::default()
     }
 
@@ -38,18 +41,28 @@ impl Deduplicator {
     ///
     /// This is just a convenience function that calls [`scan`](Deduplicator::.scan) and
     /// [`delete`](Deduplicator::delete) in turn.
-    pub fn scan_and_delete<D>(&self, directories: D, policy: DeletePolicy) -> Vec<OsString>
+    pub fn scan_and_delete<P>(&self, paths: P, policy: DeletePolicy) -> Vec<OsString>
     where
-        D: IntoIterator<Item = Path>,
+        P: IntoIterator<Item = PathBuf>,
     {
-        let duplicate_map = self.scan(directories);
+        let duplicate_map = self.scan(paths);
         self.delete(duplicate_map, policy)
     }
 }
 
 /// The [`DeduplicatorConfig`] is how one can configure the [`Deduplicator`]. The [`Deduplicator`] can
 /// then be constructed using [`build`](DeduplicatorConfig::build).
-pub struct DeduplicatorConfig {}
+pub struct DeduplicatorConfig {
+    recursive: bool,
+}
+
+impl Default for DeduplicatorConfig {
+    fn default() -> Self {
+        Self {
+            recursive: Default::default(),
+        }
+    }
+}
 
 impl DeduplicatorConfig {
     /// Builds a [`Deduplicator`] out of the given [`DeduplicatorConfig`].
