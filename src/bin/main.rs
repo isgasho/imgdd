@@ -1,3 +1,7 @@
+use imgdd::ScannerConfig;
+
 fn main() {
-    println!("TBD!")
+    println!("TBD!");
+
+    let scanner = ScannerConfig::default().build();
 }

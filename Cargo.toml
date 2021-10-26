@@ -9,6 +9,9 @@ path = "src/bin/main.rs"
 doc = false
 
 [dependencies]
+bk-tree = "0.4.0"
 img_hash = "3.2.0"
-imghdr = "0.7.0"
+itertools = "0.10"
 thiserror = "1.0.30"
+triple_accel = "0.4.0"
+walkdir = "2.3.2"

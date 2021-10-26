@@ -14,4 +14,10 @@ pub enum DeletePolicy {
 
     /// Keep the smallest image in terms of file size.
     Smallest,
+
+    /// Keep the first image lexicographically.
+    First,
+
+    /// Keep the last image lexicographically.
+    Last,
 }

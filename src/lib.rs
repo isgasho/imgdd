@@ -6,10 +6,11 @@
 #![forbid(rust_2018_idioms)]
 #![forbid(rust_2021_compatibility)]
 
-mod deduplicator;
 mod delete_policy;
 mod error;
+mod hamming_distance_metric;
+mod scanner;
 
-pub use deduplicator::{Deduplicator, DeduplicatorConfig};
 pub use delete_policy::DeletePolicy;
 pub use error::*;
+pub use scanner::{Scanner, ScannerConfig};
